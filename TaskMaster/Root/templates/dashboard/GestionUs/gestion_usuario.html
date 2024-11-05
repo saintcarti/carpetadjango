@@ -1,35 +1,37 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Usuario</title>
-    <link rel="stylesheet" href="{% static 'css/gestion_estilo.css'%}">
+    <link rel="stylesheet" href="{% static 'css/gestion_estilo.css' %}">
 </head>
 <body>
-    <div style="display: flex; justify-content: start;">
-        <a href="{%url 'admin_dashboard'%}">Volver</a>
+    <div class="back-container">
+        <a href="{% url 'admin_dashboard' %}" class="back-btn">Volver</a>
     </div>
 
     <div class="container">
-        <h1>GESTIÓN DE USUARIO</h1>
+        <h1>Gestión de Usuario</h1>
+
         <div class="user-row">
             <span>USUARIO 1</span>
-            <button class="modify-btn">MODIFICAR</button>
+            <button href="{% url 'modifyuser %'}" class="modify-btn">MODIFICAR</button>
             <button class="delete-btn">ELIMINAR</button>
         </div>
         <div class="user-row">
             <span>USUARIO 2</span>
-            <button class="modify-btn">MODIFICAR</button>
+            <button href="{% url 'modifyuser %'}" class="modify-btn">MODIFICAR</button>
             <button class="delete-btn">ELIMINAR</button>
         </div>
         <div class="user-row">
             <span>USUARIO 3</span>
-            <button class="modify-btn">MODIFICAR</button>
+            <button href="{% url 'modifyuser %'}" class="modify-btn">MODIFICAR</button>
             <button class="delete-btn">ELIMINAR</button>
         </div>
-        <button class="create-btn">CREAR</button>
+        
+        <button href="{% url 'createUser' %}" class="create-btn">CREAR</button>
     </div>
 </body>
 </html>

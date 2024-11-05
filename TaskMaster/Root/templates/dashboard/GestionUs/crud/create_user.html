@@ -1,0 +1,31 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <title>Crear Usuario</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Crear Usuario</h1>
+        <form id="createUserForm">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" required>
+
+            <label for="rut">RUT:</label>
+            <input type="text" id="rut" name="rut" required>
+
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" name="correo" required>
+
+            <button type="submit">Crear Usuario</button>
+            <button href="#">Ver detalles</button>
+        </form>
+    </div>
+</body>
+</html>

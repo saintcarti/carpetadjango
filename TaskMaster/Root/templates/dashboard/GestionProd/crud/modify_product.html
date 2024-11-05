@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Producto</title>
+    <link rel="stylesheet" href="{% static 'css/Sproduct.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Modificar Producto</h1>
+        <form action="#" method="post" enctype="multipart/form-data">
+            <label for="imagen">Imagen del Producto:</label>
+            <input type="file" id="imagen" name="imagen" accept="image/*">
+
+            <label for="nombre">Nombre del Producto:</label>
+            <input type="text" id="nombre" name="nombre" value="Producto Ejemplo" required>
+
+            <label for="descripcion">Descripción del Producto:</label>
+            <textarea id="descripcion" name="descripcion" rows="4" required>Descripción del producto de ejemplo.</textarea>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</body>
+</html>
