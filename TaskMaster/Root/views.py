@@ -15,8 +15,7 @@ from django.shortcuts import render
 def indexView(request):
     return render(request,"home/index.html")
 
-def gestion_usuario(request):
-    return render(request, 'dashboard/GestionUs/gestion_usuario.html')
+
 
 def loginView(request):
     if request.method == 'POST':
@@ -87,9 +86,43 @@ def supervisorView(request):
 def vendedorView(request):
     return render(request, "dashboard/vendedor_dashboard.html")
 
+##gestion de usuarios
 
-def taskView(request):
-    return render(request, "dashboard/task.html")
+def gestionUs(request):
+    return render(request, "dashboard/GestionUs/gestion_usuario.html")
 
 def detailView(request):
-    return render(request, "dashboard/detail.html")
+    return render(request, "dashboard/GestionUs/crud/detail.html")
+
+def modifyUser(request):
+    return render(request, "dashboard/GestionUs/crud/modify_user.html")
+
+def createUser(request):
+    return render(request, "dashboard/GestionUs/crud/create_user.html")
+
+##gestion de productos
+
+def gestionProd(request):
+    return render(request, "dashboard/GestionProd/gestion_productos.html")
+
+def createProd(request):
+    return render(request, "dashboard/GestionProd/crud/create_product.html")
+
+def modifyProd(request):
+    return render(request, "dashboard/GestionProd/crud/modify_product.html")
+
+def detailProd(request):
+    return render(request, "dashboard/GestionProd/crud/detail.html")
+
+##gestion de tareas
+def gestionTask(request):
+    return render(request, "dashboard/GestionTareas/gestion_task.html")
+
+def createTask(request):
+    return render(request, "dashboard/GestionTareas/crud/create_task.html")
+
+def modifyTask(request):
+    return render(request, "dashboard/GestionTareas/crud/modify_task.html")
+
+def detailTask(request):
+    return render(request, "dashboard/GestionTareas/crud/detail.html")

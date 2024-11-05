@@ -1,13 +1,17 @@
-
+{%load static%}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Usuario</title>
-    <link rel="stylesheet" href="gestion_estilo.css">
+    <link rel="stylesheet" href="{% static 'css/gestion_estilo.css'%}">
 </head>
 <body>
+    <div style="display: flex; justify-content: start;">
+        <a href="{%url 'admin_dashboard'%}">Volver</a>
+    </div>
+
     <div class="container">
         <h1>GESTIÓN DE USUARIO</h1>
         <div class="user-row">
