@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm
 from django.contrib.auth.models import Group
+from django.shortcuts import render
 
 
 
@@ -13,6 +14,9 @@ from django.contrib.auth.models import Group
 # Create your views here.
 def indexView(request):
     return render(request,"home/index.html")
+
+def gestion_usuario(request):
+    return render(request, 'dashboard/GestionUs/gestion_usuario.html')
 
 def loginView(request):
     if request.method == 'POST':
