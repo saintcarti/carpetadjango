@@ -17,21 +17,21 @@
 
         <div class="user-row">
             <span>USUARIO 1</span>
-            <button href="{% url 'modifyuser %'}" class="modify-btn">MODIFICAR</button>
+            <a href="{% url 'modifyuser' %}" class="modify-btn">MODIFICAR</a>
             <button class="delete-btn">ELIMINAR</button>
         </div>
         <div class="user-row">
             <span>USUARIO 2</span>
-            <button href="{% url 'modifyuser %'}" class="modify-btn">MODIFICAR</button>
+            <a href="{% url 'modifyuser' %}" class="modify-btn">MODIFICAR</a>
             <button class="delete-btn">ELIMINAR</button>
         </div>
         <div class="user-row">
             <span>USUARIO 3</span>
-            <button href="{% url 'modifyuser %'}" class="modify-btn">MODIFICAR</button>
+            <a href="{% url 'modifyuser' %}" class="modify-btn">MODIFICAR</a>
             <button class="delete-btn">ELIMINAR</button>
         </div>
         
-        <button href="{% url 'createUser' %}" class="create-btn">CREAR</button>
+        <a href="{% url 'createUser' %}" class="create-btn">CREAR</a>
     </div>
 </body>
 </html>

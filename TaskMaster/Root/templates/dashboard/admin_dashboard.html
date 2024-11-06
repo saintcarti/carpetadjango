@@ -18,9 +18,10 @@
             </div>
             <nav class="menu">
                 <ul>
+                    <li><a href="{% url 'admin_dashboard'%}">Dashboard</a></li>
                     <li><a href="{% url 'gestion_usuario' %}">Gestionar usuarios</a></li>
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Tareas</a></li>
+                    <li><a href="{% url 'gestion_task'%}">Gestionar Tareas</a></li>
+                    <li><a href="{% url 'gestion_productos' %}">Gestionar productos</a></li>
                     <li><a href="{% url 'logout' %}">Cerrar Sesion</a></li>
                 </ul>
             </nav>
