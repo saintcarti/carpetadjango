@@ -12,21 +12,35 @@ body {
     margin: 0;
 }
 
-.card-container {
+.wrapper {
     display: flex;
-    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+}
+.task-box {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 380px;  /* Aumenté el ancho de 280px a 380px */
+    padding: 30px;  /* Aumenté el padding para darle más espacio interior */
+    text-align: center;
+    position: relative;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
 }
 
 .card {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 250px;
-    padding: 20px;
+    width: 320px;  /* Aumenté el ancho de 250px a 320px */
+    padding: 30px;  /* Aumenté el padding para más espacio interior */
     text-align: left;
     position: relative;
 }
-
 .card-header {
     display: flex;
     align-items: center;
@@ -105,3 +119,69 @@ h3 {
 .complete-btn.done {
     background-color: #2ecc71;
 }
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+.add-btn, .back-btn {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 15px 0;
+    width: 200px;
+}
+
+.add-btn:hover, .back-btn:hover {
+    background-color: #2980b9;
+}
+
+.add-btn {
+    margin-bottom: 10px;
+}
+
+/* Estilo para el botón "Volver" */
+.back-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+}
+
+.back-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.back-btn {
+    color: #333;
+    text-decoration: none;
+    font-size: 20px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.back-btn i {
+    margin-right: 5px;
+    font-size: 24px; 
+}
+
+

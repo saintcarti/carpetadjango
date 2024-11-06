@@ -1,64 +1,39 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Cards</title>
-    <link rel="stylesheet" href="{%static 'css/G_task.css'%}">
+    <link rel="stylesheet" href="{% static 'css/G_task.css' %}">
 </head>
 <body>
-    <div class="card-container">
-        <div class="card">
-            <div class="card-header">
-                <img src="https://via.placeholder.com/40" alt="Company Logo" class="company-logo">
-                <div>
-                    <h4>Mailchimp</h4>
-                    <span>1 day ago</span>
+    <div class="back-container">
+        <a href="{% url 'admin_dashboard' %}" class="back-btn"><i class="fas fa-arrow-left"></i> Volver</a>
+    </div>
+    <div class="wrapper">
+        <div class="task-box">
+            <h2>TAREAS</h2>
+            <div class="card">
+                <div class="card-header">
+                    <img src="https://via.placeholder.com/40" alt="Company Logo" class="company-logo">
+                    <div>
+                        <h4>Mailchimp</h4>
+                        <span>1 day ago</span>
+                    </div>
+                    <span class="tag">Design</span>
+                    <button class="delete-btn">Eliminar</button>
                 </div>
-                <span class="tag">Design</span>
+                <h3>Senior Product Designer - Singapore</h3>
+                <p class="applied">32 Applied of 50 capacity</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 50%;"></div>
+                </div>
+                <button class="complete-btn" onclick="markAsDone(this)">Marcar como Realizado</button>
             </div>
-            <h3>Senior Product Designer - Singapore</h3>
-            <p class="applied">32 Applied of 50 capacity</p>
-            <div class="progress-bar">
-                <div class="progress" style="width: 64%;"></div>
-            </div>
-            <button class="complete-btn" onclick="markAsDone(this)">Marcar como Realizado</button>
         </div>
+        <button class="add-btn">Agregar</button>
         
-        <div class="card">
-            <div class="card-header">
-                <img src="https://via.placeholder.com/40" alt="Company Logo" class="company-logo">
-                <div>
-                    <h4>Dribbble</h4>
-                    <span>4 days ago</span>
-                </div>
-                <span class="tag">Product</span>
-            </div>
-            <h3>Junior Product Designer - Singapore</h3>
-            <p class="applied">42 Applied of 70 capacity</p>
-            <div class="progress-bar">
-                <div class="progress" style="width: 60%;"></div>
-            </div>
-            <button class="complete-btn" onclick="markAsDone(this)">Marcar como Realizado</button>
-        </div>
-        
-        <div class="card">
-            <div class="card-header">
-                <img src="https://via.placeholder.com/40" alt="Company Logo" class="company-logo">
-                <div>
-                    <h4>Reddit</h4>
-                    <span>2 days ago</span>
-                </div>
-                <span class="tag">Design</span>
-            </div>
-            <h3>Software Architect Java - USA</h3>
-            <p class="applied">52 Applied of 100 capacity</p>
-            <div class="progress-bar">
-                <div class="progress" style="width: 52%;"></div>
-            </div>
-            <button class="complete-btn" onclick="markAsDone(this)">Marcar como Realizado</button>
-        </div>
     </div>
 
     <script>
