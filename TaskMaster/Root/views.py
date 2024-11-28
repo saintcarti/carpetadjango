@@ -69,7 +69,6 @@ def logoutView(request):
     logout(request)
     return redirect('login')
 
-@login_required
 def dashboardView(request):
     tareas = tarea.objects.all()
     context = {
