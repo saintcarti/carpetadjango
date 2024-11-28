@@ -77,11 +77,12 @@ def dashboardView(request):
     
     return render(request, "dashboard/admin_dashboard.html",context)
 
-@login_required
 def supervisorView(request):
     return render(request, "dashboard/supervisor_dashboard.html")
 
-@login_required
+def blankView(request):
+    return render(request, "dashboard/blank.html")
+
 def vendedorView(request):
     return render(request, "dashboard/vendedor_dashboard.html")
 
