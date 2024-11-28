@@ -1,0 +1,132 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f6fb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .container {
+    background-color: white;
+    width: 90%;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .header h1 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin: 0;
+  }
+  
+  .header p {
+    color: #7f8c8d;
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  .details, .inspection {
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    font-size: 0.9rem;
+    color: #34495e;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"], input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dfe6e9;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .input-with-icon {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-with-icon input {
+    flex: 1;
+  }
+  
+  .delete-btn {
+    background: none;
+    color: #e74c3c;
+    border: none;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .inspection-item {
+    margin-bottom: 15px;
+  }
+  
+  .actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .status-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    margin-left: 10px;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .status-btn.red {
+    background-color: #e74c3c;
+  }
+  
+  .status-btn.green {
+    background-color: #2ecc71;
+  }
+  
+  .signature {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .signature-btn {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .signature-btn:hover {
+    background-color: #2980b9;
+  }
+  

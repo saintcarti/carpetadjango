@@ -20,6 +20,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{%static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
+    <link href="{%static ' css/Ges-usuario.css'%}" rel="stylesheet">
 
 </head>
 
@@ -359,10 +360,80 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
+                   
                     <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
 
+                    <div class="container">
+                        <h1>Lista de empleados</h1>
+                        <a href="#">Agregar datos</a>
+                        <div class="filters">
+                          <select>
+                            <option value="all">Filtros de datos de empleados</option>
+                            <option value="contratado">Contratados</option>
+                            <option value="outsourcing">Outsourcing</option>
+                            <option value="fijo">Fijos</option>
+                          </select>
+                        </div>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>No</th>
+                              <th>Código</th>
+                              <th>Nombre</th>
+                              <th>Lugar de nacimiento</th>
+                              <th>Fecha de nacimiento</th>
+                              <th>Teléfono</th>
+                              <th>Cargo</th>
+                              <th>Estado</th>
+                              <th>Acciones</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1</td>
+                              <td>1250</td>
+                              <td><a href="#">Juan Campos</a></td>
+                              <td>Santa Ana, El Salvador</td>
+                              <td>15-06-1991</td>
+                              <td>70252525</td>
+                              <td>Gerente</td>
+                              <td><span class="badge contratado">Contratado</span></td>
+                              <td>
+                                <button class="edit">✏️</button>
+                                <button class="delete">🗑️</button>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>2</td>
+                              <td>12509</td>
+                              <td><a href="#">Andres Perez</a></td>
+                              <td>SM</td>
+                              <td>06-06-1980</td>
+                              <td>12345789</td>
+                              <td>Gerente</td>
+                              <td><span class="badge outsourcing">Outsourcing</span></td>
+                              <td>
+                                <button class="edit">✏️</button>
+                                <button class="delete">🗑️</button>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>3</td>
+                              <td>15200</td>
+                              <td><a href="#">Marcos Amaya</a></td>
+                              <td>Santa Salvador</td>
+                              <td>06-06-2017</td>
+                              <td>12345678</td>
+                              <td>Vendedor</td>
+                              <td><span class="badge fijo">Fijo</span></td>
+                              <td>
+                                <button class="edit">✏️</button>
+                                <button class="delete">🗑️</button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                 </div>
                 <!-- /.container-fluid -->
 
