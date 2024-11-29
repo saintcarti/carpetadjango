@@ -341,9 +341,12 @@
                 <div class="container-fluid">
                    
                     <div class="container">
-                        <button style="background-color: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">
-                            Nuevo +
-                        </button>
+                    <a 
+                        href="{% url 'createUser' %}" 
+                        style="background-color: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; text-decoration: none; display: inline-block;">
+                        Nuevo +
+                    </a>
+                    
                         <table>
                             <thead>
                                 <tr>
@@ -359,17 +362,26 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><button class="edit-btn">✏️</button></td>
-                                    <td><button class="delete-btn">🗑️</button></td>
+                                    <td><a class="edit-btn" href="{% url 'modifyuser' %}">✏️</a></td>
+                                    <td><a class="delete-btn" onclick="deleteAlert()">🗑️</a></td>
+
                                 </tr>
-                                
                             </tbody>
                         </table>
                     </main>
 
+                    <script>
+                        function deleteAlert() {
+                          const confirmation = confirm("¿Estás seguro de que deseas eliminar este usuario?");
+                          if (confirmation) {
+                            alert("Usuario eliminado correctamente."); 
+                            // Aquí puedes agregar lógica adicional, como eliminar el registro vía backend.
+                          }
+                        }
+                      </script>                      
+
 
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 
