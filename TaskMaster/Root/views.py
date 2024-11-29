@@ -63,7 +63,7 @@ def registerView(request):
             user_creation_form.save()
             return redirect('login')
 
-    return render(request,"acceso/register.html",data)
+    return render(request,"dashboard/GestionUs/register.html",data)
 
 def logoutView(request):
     logout(request)
