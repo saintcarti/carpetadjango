@@ -80,6 +80,9 @@ def dashboardView(request):
 def supervisorView(request):
     return render(request, "dashboard/supervisor_dashboard.html")
 
+def GestionUsuarioView(request):
+    return render(request, "dashboard/GestionUs/gestion_usuario.html")
+
 def blankView(request):
     return render(request, "dashboard/blank.html")
 

@@ -12,8 +12,8 @@ urlpatterns = [
     path('dashboard-vend',views.vendedorView, name='vendedor_dashboard'),
     path('index',views.indexView, name='index'),
     path('dashboard-admin/blank',views.blankView, name='blank'),
+    path('dashboard-admin/Gestion_usuario',views.GestionUsuarioView, name='gestion_usuario'),
     ##Gestion de usuarios
-    path('gestion-usuario',views.gestionUs,name='gestion_usuario'),
     path('modifyUser',views.modifyUser,name='modifyuser'),
     path('createUser',views.createUser,name='createUser'),
     path('detailUser',views.detailView, name='detailUser'),
