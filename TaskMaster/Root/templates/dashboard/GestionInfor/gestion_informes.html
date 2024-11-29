@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Informes</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="form-container">
+    <div class="form-header">
+      <h2>Solicitudes</h2>
+      <div class="form-buttons">
+        <button class="btn" type="button">Nuevo</button>
+        <button class="btn" type="button">Consultar</button>
+      </div>
+    </div>
+    <form action="#" method="POST">
+      <div class="form-group">
+        <label for="informe">Informe</label>
+        <select id="informe" name="informe" required>
+          <option value="" disabled selected>Por favor seleccione una opción</option>
+          <option value="inf1">Informe 1</option>
+          <option value="inf2">Informe 2</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="categoria">Categoría</label>
+        <select id="categoria" name="categoria" required>
+          <option value="" disabled selected>Por favor seleccione una opción</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="servicio">Servicio</label>
+        <select id="servicio" name="servicio" required>
+          <option value="" disabled selected>Por favor seleccione una opción</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="subservicio">Sub-Servicio</label>
+        <select id="subservicio" name="subservicio" required>
+          <option value="" disabled selected>Por favor seleccione una opción</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="tipo">Tipo</label>
+        <select id="tipo" name="tipo" required>
+          <option value="" disabled selected>Por favor seleccione una opción</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="comentarios">Comentarios (Máximo 1000 caracteres)</label>
+        <textarea id="comentarios" name="comentarios" maxlength="1000" rows="4"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="archivos">Archivos asociados a la solicitud</label>
+        <input type="file" id="archivos" name="archivos[]" multiple accept=".pdf,.doc,.docx,.jpg,.png">
+        <small>Se permiten únicamente archivos con la extensión: pdf, doc, docx, jpg, png. (Máximo 4 archivos, 5MB c/u).</small>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-submit">Enviar</button>
+        <button type="reset" class="btn btn-cancel">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

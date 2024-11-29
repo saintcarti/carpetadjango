@@ -1,5 +1,4 @@
 {%load static%}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Buttons</title>
+    <title>Blank</title>
 
     <!-- Custom fonts for this template-->
     <link href="{%static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
@@ -21,6 +20,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{%static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
+    <link href="{%static ' css/Ges-usuario.css'%}" rel="stylesheet">
 
 </head>
 
@@ -33,11 +33,11 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{%url 'admin_dashboard'%}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">Blank page <sup>2</sup></div>
             </a>
 
             <!-- Divider -->
@@ -59,14 +59,13 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-                    aria-controls="collapseTwo">
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Gestion de usuarios</span>
                 </a>
-                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Acciones:</h6>
                         <a class="collapse-item active" href="{%url 'gestion_usuario'%}">Gestion usuario</a>
@@ -103,13 +102,14 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+            <li class="nav-item active">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+                    aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Pages</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="login.html">Login</a>
@@ -118,7 +118,7 @@
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <a class="collapse-item active" href="blank.html">Blank Page</a>
                     </div>
                 </div>
             </li>
@@ -360,9 +360,88 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                   
+                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+                    <nav style="background-color: #007bff; padding: 1em; color: white; text-align: left;">
+                        <h1 style="margin: 0; display: inline; color: white;">POS</h1>
+                        <a href="#" style="margin-left: 20px; color: white; text-decoration: none;">Productos</a>
+                        <a href="#" style="margin-left: 20px; color: white; text-decoration: none;">Vender</a>
+                        <a href="#" style="margin-left: 20px; color: white; text-decoration: none;">Ventas</a>
+                    </nav>
+                    <main style="padding: 20px;">
+                        <h2>Productos</h2>
+                        <button style="background-color: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">
+                            Nuevo +
+                        </button>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Código</th>
+                                    <th>Descripción</th>
+                                    <th>Precio de compra</th>
+                                    <th>Precio de venta</th>
+                                    <th>Existencia</th>
+                                    <th>Editar</th>
+                                    <th>Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>Galletas chokis</td>
+                                    <td>10.00</td>
+                                    <td>15.00</td>
+                                    <td>2.00</td>
+                                    <td><button class="edit-btn">✏️</button></td>
+                                    <td><button class="delete-btn">🗑️</button></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>Mermelada de fresa</td>
+                                    <td>65.00</td>
+                                    <td>80.00</td>
+                                    <td>97.00</td>
+                                    <td><button class="edit-btn">✏️</button></td>
+                                    <td><button class="delete-btn">🗑️</button></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>3</td>
+                                    <td>Aceite</td>
+                                    <td>18.00</td>
+                                    <td>20.00</td>
+                                    <td>100.00</td>
+                                    <td><button class="edit-btn">✏️</button></td>
+                                    <td><button class="delete-btn">🗑️</button></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>4</td>
+                                    <td>Palomitas de maíz</td>
+                                    <td>12.00</td>
+                                    <td>15.00</td>
+                                    <td>98.00</td>
+                                    <td><button class="edit-btn">✏️</button></td>
+                                    <td><button class="delete-btn">🗑️</button></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>5</td>
+                                    <td>Doritos</td>
+                                    <td>5.00</td>
+                                    <td>8.00</td>
+                                    <td>99.00</td>
+                                    <td><button class="edit-btn">✏️</button></td>
+                                    <td><button class="delete-btn">🗑️</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </main>
 
-                    
-                </div>
+
                 <!-- /.container-fluid -->
 
             </div>
@@ -403,7 +482,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="{%url 'login'%}">Logout</a>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
                 </div>
             </div>
         </div>
