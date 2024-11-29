@@ -30,5 +30,6 @@ urlpatterns = [
     path('detailTask',views.detailTask,name='detailTask'),
     ##Gestion de informes
     path('gestion-informes',views.gestionarInformes,name='gestion_informes'),
+    path('gestion-reportes',views.gestionReporte, name= 'gestion_reportes'),
 
 ]

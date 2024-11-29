@@ -78,6 +78,7 @@ def logoutView(request):
     return redirect('login')
 
 def dashboardView(request):
+
     tareas = tarea.objects.all()
     context = {
         'tareas':tareas
@@ -126,7 +127,10 @@ def detailProd(request):
     return render(request, "dashboard/GestionProd/crud/detail.html")
 
 def gestionCategoria(request):
-    return render(request, "dashboard/GestionProd/gestion_categorias.html")
+    return render(request, "dashboard/GestionProd/gestionar_categorias.html")
+
+def gestionReporte(request):
+    return render(request, "dashboard/GestionInfor/gestion_reporte.html")
 
 ##gestion de tareas
 def gestionTask(request):
