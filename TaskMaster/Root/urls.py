@@ -22,6 +22,7 @@ urlpatterns = [
     path('detailProd',views.detailProd,name='detailProd'),
     path('modifyProd',views.modifyProd,name='modifyProd'),
     path('createProd',views.createProd,name='createProd'),
+    path('gestion-categorias',views.gestionCategoria,name='gestion_categorias'),
     ##Gestion de tareas
     path('gestion-tareas',views.gestionTask,name='gestion_task'),
     path('createTask',views.createTask,name='createTask'),

@@ -53,6 +53,9 @@ def loginView(request):
             return render(request,'acceso/login.html',context)
     return render(request,"acceso/login.html")
 
+
+
+
 def registerView(request):
     data = {
         'form':CustomUserCreationForm()
@@ -121,6 +124,9 @@ def modifyProd(request):
 
 def detailProd(request):
     return render(request, "dashboard/GestionProd/crud/detail.html")
+
+def gestionCategoria(request):
+    return render(request, "dashboard/GestionProd/gestion_categorias.html")
 
 ##gestion de tareas
 def gestionTask(request):
