@@ -57,15 +57,15 @@
             <div class="sidebar-heading">
                 Acciones
             </div>
-
+            
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUserManagement"
+                    aria-expanded="true" aria-controls="collapseUserManagement">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Gestion de usuarios</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseUserManagement" class="collapse" aria-labelledby="headingUserManagement" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Acciones:</h6>
                         <a class="collapse-item active" href="{%url 'gestion_usuario'%}">Gestion usuario</a>
@@ -73,73 +73,52 @@
                     </div>
                 </div>
             </li>
-
+            
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportManagement"
+                    aria-expanded="true" aria-controls="collapseReportManagement">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Gestion de Informes</span>
+                </a>
+                <div id="collapseReportManagement" class="collapse" aria-labelledby="headingReportManagement" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Acciones:</h6>
+                        <a class="collapse-item active" href="{%url 'gestion_informes'%}">Gestionar informes</a>
+                    </div>
+                </div>
+            </li>
+            
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-cash-register"></i>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProductManagement"
+                    aria-expanded="true" aria-controls="collapseProductManagement">
+                    <i class="fas fa-fw fa-wrench"></i>
                     <span>Gestion de productos</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                <div id="collapseProductManagement" class="collapse" aria-labelledby="headingProductManagement"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <h6 class="collapse-header">Acciones:</h6>
+                        <a class="collapse-item" href="">Gestionar productos</a>
+                        <a class="collapse-item" href="">Gestionar categorias</a>
                     </div>
                 </div>
             </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
-                    aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+            
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTaskManagement"
+                    aria-expanded="true" aria-controls="collapseTaskManagement">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Gestion de tareas</span>
                 </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                <div id="collapseTaskManagement" class="collapse" aria-labelledby="headingTaskManagement"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item active" href="blank.html">Blank Page</a>
+                        <h6 class="collapse-header">Acciones:</h6>
+                        <a class="collapse-item" href="">Gestionar tareas</a>
                     </div>
                 </div>
             </li>
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -361,15 +340,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                    
-                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
-                    <nav style="background-color: #007bff; padding: 1em; color: white; text-align: left;">
-                        <h1 style="margin: 0; display: inline; color: white;">POS</h1>
-                        <a href="#" style="margin-left: 20px; color: white; text-decoration: none;">Productos</a>
-                        <a href="#" style="margin-left: 20px; color: white; text-decoration: none;">Vender</a>
-                        <a href="#" style="margin-left: 20px; color: white; text-decoration: none;">Ventas</a>
-                    </nav>
-                    <main style="padding: 20px;">
-                        <h2>Productos</h2>
+                    <div class="container">
                         <button style="background-color: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">
                             Nuevo +
                         </button>
@@ -388,55 +359,10 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>Galletas chokis</td>
-                                    <td>10.00</td>
-                                    <td>15.00</td>
-                                    <td>2.00</td>
                                     <td><button class="edit-btn">✏️</button></td>
                                     <td><button class="delete-btn">🗑️</button></td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>Mermelada de fresa</td>
-                                    <td>65.00</td>
-                                    <td>80.00</td>
-                                    <td>97.00</td>
-                                    <td><button class="edit-btn">✏️</button></td>
-                                    <td><button class="delete-btn">🗑️</button></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>3</td>
-                                    <td>Aceite</td>
-                                    <td>18.00</td>
-                                    <td>20.00</td>
-                                    <td>100.00</td>
-                                    <td><button class="edit-btn">✏️</button></td>
-                                    <td><button class="delete-btn">🗑️</button></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>4</td>
-                                    <td>Palomitas de maíz</td>
-                                    <td>12.00</td>
-                                    <td>15.00</td>
-                                    <td>98.00</td>
-                                    <td><button class="edit-btn">✏️</button></td>
-                                    <td><button class="delete-btn">🗑️</button></td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>5</td>
-                                    <td>Doritos</td>
-                                    <td>5.00</td>
-                                    <td>8.00</td>
-                                    <td>99.00</td>
-                                    <td><button class="edit-btn">✏️</button></td>
-                                    <td><button class="delete-btn">🗑️</button></td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </main>
@@ -451,7 +377,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        
                     </div>
                 </div>
             </footer>

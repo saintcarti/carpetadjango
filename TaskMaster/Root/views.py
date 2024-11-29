@@ -65,6 +65,11 @@ def registerView(request):
 
     return render(request,"dashboard/GestionUs/register.html",data)
 
+
+def gestionarInformes(request):
+    return render(request, "dashboard/GestionInfor/gestion_informes.html")
+
+
 def logoutView(request):
     logout(request)
     return redirect('login')
