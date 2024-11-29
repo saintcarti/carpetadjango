@@ -352,9 +352,11 @@
                    
                                         <main style="padding: 20px;">
                         <h2>Productos</h2>
-                        <button style="background-color: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">
-                            Nuevo +
-                        </button>
+                        <a 
+                        href="{% url 'createProd' %}" 
+                        style="background-color: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; text-decoration: none; display: inline-block;">
+                        Nuevo +
+                        </a>
                         <table>
                             <thead>
                                 <tr>
@@ -376,8 +378,8 @@
                                     <td>10.00</td>
                                     <td>15.00</td>
                                     <td>2.00</td>
-                                    <td><button class="edit-btn">✏️</button></td>
-                                    <td><button class="delete-btn">🗑️</button></td>
+                                    <td><a class="edit-btn" href="{% url 'modifyProd' %}">✏️</a></td>
+                                    <td><a class="delete-btn" onclick="deleteAlert()">🗑️</a></td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
@@ -386,8 +388,8 @@
                                     <td>65.00</td>
                                     <td>80.00</td>
                                     <td>97.00</td>
-                                    <td><button class="edit-btn">✏️</button></td>
-                                    <td><button class="delete-btn">🗑️</button></td>
+                                    <td><a class="edit-btn" href="{% url 'modifyProd' %}">✏️</a></td>
+                                    <td><a class="delete-btn" onclick="deleteAlert()">🗑️</a></td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
@@ -396,8 +398,8 @@
                                     <td>18.00</td>
                                     <td>20.00</td>
                                     <td>100.00</td>
-                                    <td><button class="edit-btn">✏️</button></td>
-                                    <td><button class="delete-btn">🗑️</button></td>
+                                    <td><a class="edit-btn" href="{% url 'modifyProd' %}">✏️</a></td>
+                                    <td><a class="delete-btn" onclick="deleteAlert()">🗑️</a></td>
                                 </tr>
                                 <tr>
                                     <td>4</td>
@@ -406,8 +408,8 @@
                                     <td>12.00</td>
                                     <td>15.00</td>
                                     <td>98.00</td>
-                                    <td><button class="edit-btn">✏️</button></td>
-                                    <td><button class="delete-btn">🗑️</button></td>
+                                    <td><a class="edit-btn" href="{% url 'modifyProd' %}">✏️</a></td>
+                                    <td><a class="delete-btn" onclick="deleteAlert()">🗑️</a></td>
                                 </tr>
                                 <tr>
                                     <td>5</td>
@@ -416,12 +418,22 @@
                                     <td>5.00</td>
                                     <td>8.00</td>
                                     <td>99.00</td>
-                                    <td><button class="edit-btn">✏️</button></td>
-                                    <td><button class="delete-btn">🗑️</button></td>
+                                        <td><a class="edit-btn" href="{% url 'modifyProd' %}">✏️</a></td>
+                                        <td><a class="delete-btn" onclick="deleteAlert()">🗑️</a></td>
                                 </tr>
                             </tbody>
                         </table>
                     </main>
+
+                    <script>
+                        function deleteAlert() {
+                          const confirmation = confirm("¿Estás seguro de que deseas eliminar este producto?");
+                          if (confirmation) {
+                            alert("Producto eliminado correctamente."); 
+                            // Aquí puedes agregar lógica adicional, como eliminar el registro vía backend.
+                          }
+                        }
+                      </script>       
 
 
                 <!-- /.container-fluid -->
