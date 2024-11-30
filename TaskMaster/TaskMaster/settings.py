@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Root',
+    'Root.apps.RootConfig',  # Mantén solo esta línea
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -126,6 +127,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ROLES = [
     ('admin', 'Administrador'),
+    ('supervisor', 'Supervisor'),
     ('vendedor', 'Vendedor'),
-    ('supervisor', 'Supervisor')
 ]

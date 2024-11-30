@@ -1,42 +1,31 @@
 from django import forms
 from django.contrib.auth.models import User, Group
 from django.conf import settings
-from django.contrib.auth.password_validation import validate_password
 
 class CustomUserCreationForm(forms.ModelForm):
-    # Campo para seleccionar el grupo del usuario
+    # Campo para seleccionar el grupo de usuario (Administrador, Supervisor, Vendedor)
     group = forms.ModelChoiceField(
-        queryset=Group.objects.filter(name__in=[role[0] for role in settings.ROLES]),
+        queryset=Group.objects.filter(name__in=[role[0] for role in settings.ROLES]),  # Filtrando según los roles definidos en settings.ROLES
         required=True,
         label="Grupo",
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={'class': 'form-control'})  # Asegurando el estilo de Bootstrap
     )
-    
-    # Campo para la contraseña
+
+    # Campos para contraseña
     password1 = forms.CharField(
-        label="Contraseña",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-        help_text="La contraseña debe tener al menos 8 caracteres."
+        label="Contraseña", 
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
-    
-    # Campo para confirmar la contraseña
     password2 = forms.CharField(
-        label="Confirmar contraseña",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-        help_text="Introduce nuevamente la contraseña para confirmar."
+        label="Confirmar contraseña", 
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'group']
+        fields = ['username', 'email', 'group']  # Los campos que se deben mostrar en el formulario
 
-    # Validación de la primera contraseña
-    def clean_password1(self):
-        password = self.cleaned_data.get("password1")
-        validate_password(password)  # Valida la contraseña según las reglas de Django
-        return password
-
-    # Validación de la confirmación de la contraseña
+    # Validación de la confirmación de contraseña
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
@@ -44,13 +33,20 @@ class CustomUserCreationForm(forms.ModelForm):
             raise forms.ValidationError("Las contraseñas no coinciden.")
         return password2
 
-    # Guardar el usuario con su contraseña y grupo
+    # Método para guardar al usuario y asignar el grupo seleccionado
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password1"])  # Establecer la contraseña de forma segura
+        user.set_password(self.cleaned_data["password1"])
+
         if commit:
-            user.save()
-            group = self.cleaned_data.get("group")
-            if group:
-                user.groups.add(group)  # Asignar el grupo al usuario
+            user.save()  # Guarda el usuario en la base de datos
+            group = self.cleaned_data["group"]
+            user.groups.add(group)  # Asigna el grupo al usuario
+
+            # Si el grupo es 'admin', asignamos privilegios de staff y superusuario
+            if group.name == 'admin':
+                user.is_staff = True
+                user.is_superuser = True
+                user.save()
+
         return user

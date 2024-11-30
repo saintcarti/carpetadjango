@@ -54,23 +54,17 @@ def loginView(request):
     return render(request,"acceso/login.html")
 
 
-
-
 def registerView(request):
-    data = {
-        'form': CustomUserCreationForm()
-    }
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Usuario registrado con éxito.")
-            return redirect('dashboard-admin')
-        else:
-            form = CustomUserCreationForm()
-        return render(request, "dashboard/GestionUs/register.html", data)
+            form.save()  # Guarda el nuevo usuario
+            messages.success(request, "El usuario ha sido registrado correctamente.")
+            return redirect('admin_dashboard')  # Redirige a la página de login después del registro
+    else:
+        form = CustomUserCreationForm()
 
-
+    return render(request, "dashboard/GestionUs/register.html", {'form': form})
 
 def gestionarInformes(request):
     return render(request, "dashboard/GestionInfor/gestion_informes.html")
