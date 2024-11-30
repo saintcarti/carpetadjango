@@ -60,20 +60,7 @@
             </div>
             
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUserManagement"
-                    aria-expanded="true" aria-controls="collapseUserManagement">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Gestion de usuarios</span>
-                </a>
-                <div id="collapseUserManagement" class="collapse" aria-labelledby="headingUserManagement" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Acciones:</h6>
-                        <a class="collapse-item active" href="{%url 'gestion_usuario'%}">Gestion usuario</a>
-                        <a class="collapse-item" href="{%url 'register'%}">Registrar usuario</a>
-                    </div>
-                </div>
-            </li>
+            
             
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportManagement"
@@ -157,156 +144,14 @@
                     </form>
 
                     <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-
-                        <!-- Nav Item - Messages -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="{%static 'img/undraw_profile_1.svg'%}"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="{%static 'img/undraw_profile_2.svg'%}"
-                                            alt="...">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="{%static 'img/undraw_profile_3.svg'%}"
-                                            alt="...">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
-                        </li>
-
+                    
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.username}}</span>
                                 <img class="img-profile rounded-circle"
                                     src="{%static 'img/undraw_profile.svg'%}">
                             </a>
@@ -336,69 +181,67 @@
                     </ul>
 
                 </nav>
-  <div class="form-container">
-    <div class="form-header">
-      <h2>Solicitudes</h2>
-      <div class="form-buttons">
-        <button class="btn" type="button">Nuevo</button>
-        <button class="btn" type="button">Consultar</button>
-      </div>
-    </div>
-    <form action="#" method="POST">
-      <div class="form-group">
-        <label for="informe">Informe</label>
-        <select id="informe" name="informe" required>
-          <option value="" disabled selected>Por favor seleccione una opción</option>
-          <option value="inf1">Informe 1</option>
-          <option value="inf2">Informe 2</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="categoria">Categoría</label>
-        <select id="categoria" name="categoria" required>
-          <option value="" disabled selected>Por favor seleccione una opción</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="servicio">Servicio</label>
-        <select id="servicio" name="servicio" required>
-          <option value="" disabled selected>Por favor seleccione una opción</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="subservicio">Sub-Servicio</label>
-        <select id="subservicio" name="subservicio" required>
-          <option value="" disabled selected>Por favor seleccione una opción</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="tipo">Tipo</label>
-        <select id="tipo" name="tipo" required>
-          <option value="" disabled selected>Por favor seleccione una opción</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="comentarios">Comentarios (Máximo 1000 caracteres)</label>
-        <textarea id="comentarios" name="comentarios" maxlength="1000" rows="4"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="archivos">Archivos asociados a la solicitud</label>
-        <input type="file" id="archivos" name="archivos[]" multiple accept=".pdf,.doc,.docx,.jpg,.png">
-        <small>Se permiten únicamente archivos con la extensión: pdf, doc, docx, jpg, png. (Máximo 4 archivos, 5MB c/u).</small>
-      </div>
-      <div class="form-actions">
-        <button type="submit" class="btn btn-submit">Enviar</button>
-        <button type="reset" class="btn btn-cancel">Cancelar</button>
-      </div>
-    </form>
-  </div>
-  <footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
-        </div>
-    </div>
-</footer>
+                <div class="form-container" style="margin-left: 100px;">
+                    <div class="form-header">
+                      <h2>Solicitudes</h2>
+                    </div>
+                    <form action="#" method="POST">
+                      {% csrf_token %}
+                      
+                      <!-- Select para Cliente -->
+                      <div class="form-group">
+                        <label for="cliente">Cliente</label>
+                        <select id="cliente" name="cliente" required>
+                          <option value="" disabled selected>Por favor seleccione una opción</option>
+                            {% if clientes %}
+                                {% for cliente in clientes %}
+                                    <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
+                                {% endfor %}
+                            {% else %}
+                                <p>No hay clientes disponibles.</p>
+                            {% endif %}
+                        </select>
+                      </div>
+                
+                      <!-- Select para Productos -->
+                      <div class="form-group">
+                        <label for="productos">Productos</label>
+                        <select id="productos" name="productos" required multiple>
+                            <option value="" disabled selected>Por favor seleccione productos</option>
+                            {% for producto in productos_lista %}
+                                <option value="{{ producto.id }}">{{ producto.nombreProducto }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                
+                      <!-- Select para Vendedor -->
+                      <div class="form-group">
+                        <label for="vendedor">Vendedor</label>
+                        <select id="vendedor" name="vendedor" required>
+                            <option value="" disabled selected>Por favor seleccione un vendedor</option>
+                            {% for vendedor in vendedores %}
+                                <option value="{{ vendedor.id }}">{{ vendedor.user.username }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                      </div>
+                
+                      <!-- Otros campos del formulario -->
+                      <div class="form-actions">
+                        <button type="submit" class="btn btn-submit">Enviar</button>
+                        <button type="reset" class="btn btn-cancel">Cancelar</button>
+                      </div>
+                    </form>
+                </div>
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Your Website 2020</span>
+                        </div>
+                    </div>
+                </footer>
+                
 <!-- End of Footer -->
 
 </div>

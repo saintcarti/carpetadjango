@@ -22,49 +22,38 @@ def loginView(request):
         usuario = request.POST.get('username')
         clave = request.POST.get('password')
 
-        user = authenticate(request,username = usuario,password = clave)
+        user = authenticate(request, username=usuario, password=clave)
 
         if user is not None:
-            print("inicio correctamente")
-            login(request,user)
+            login(request, user)
 
-            if user.groups.filter(name='administrador').exists():
-                print("administrador")
+            # Redirección según el grupo del usuario
+            if user.groups.filter(name='admin').exists():
                 return redirect('admin_dashboard')
             elif user.groups.filter(name='supervisor').exists():
-                print("supervisor")
                 return redirect('supervisor_dashboard')
             elif user.groups.filter(name='vendedor').exists():
-                print("vendedor")
                 return redirect('vendedor_dashboard')
             else:
-                context={
-                    'error':'No tienes permisos para ingresar'
-                }
-                return render(request,'acceso/login.html',context)
+                return render(request, 'acceso/login.html', {'error': 'No tienes permisos para ingresar'})
         else:
-            context={
-                'error':'Error intente otra vez'
-            }
-
-            print("no inicio")
-
-            print(request,user)
-            return render(request,'acceso/login.html',context)
-    return render(request,"acceso/login.html")
+            return render(request, 'acceso/login.html', {'error': 'Usuario o contraseña incorrectos'})
+    return render(request, 'acceso/login.html')
 
 
-def registerView(request):
-    if request.method == 'POST':
+@login_required
+@group_required('admin')
+def register_view(request):
+    if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()  # Guarda el nuevo usuario
-            messages.success(request, "El usuario ha sido registrado correctamente.")
-            return redirect('admin_dashboard')  # Redirige a la página de login después del registro
+            user = form.save()  # Guardar el usuario y asignar el grupo  # Iniciar sesión automáticamente después de registrarse
+            return redirect('admin_dashboard')  # Redirigir a la página principal o a un dashboard
     else:
         form = CustomUserCreationForm()
 
-    return render(request, "dashboard/GestionUs/register.html", {'form': form})
+    return render(request, 'dashboard/GestionUs/register.html', {'form': form})
+
 
 def gestionarInformes(request):
     return render(request, "dashboard/GestionInfor/gestion_informes.html")
@@ -74,6 +63,26 @@ def logoutView(request):
     logout(request)
     return redirect('login')
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def baseView(request):
+    # Verificar si el usuario pertenece a los grupos correspondientes
+    is_admin = request.user.groups.filter(name='Administrador').exists()
+    is_supervisor = request.user.groups.filter(name='Supervisor').exists()
+    is_vendedor = request.user.groups.filter(name='Vendedor').exists()
+
+    # Para depuración, puedes imprimir estas variables o pasarlas al contexto
+    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
+
+    return render(request, 'base.html', {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor,
+    })
+
+
+
 def dashboardView(request):
 
     tareas = Tarea.objects.all()
@@ -82,6 +91,21 @@ def dashboardView(request):
     }
     
     return render(request, "dashboard/admin_dashboard.html",context)
+
+def solicitud_view(request):
+    # Obtener los datos necesarios para los selects
+    clientes = Cliente.objects.all()
+    productos_lista = productos.objects.all()
+    vendedores = UserProfile.objects.all()
+
+    context = {
+        'clientes': clientes,
+        'productos_lista': productos_lista,
+        'vendedores': vendedores,
+    }
+
+    return render(request, 'dashboard/GestionInfor/gestion_reporte.html', context)
+
 
 def supervisorView(request):
     return render(request, "dashboard/supervisor_dashboard.html")

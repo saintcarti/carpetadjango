@@ -1,11 +1,14 @@
 from django.urls import path
 from . import views
+from django.contrib.auth.views import LogoutView
+
 
 urlpatterns = [
     ##auth
     path('', views.loginView, name='login'),
-    path('dashboard-admin/register/', views.registerView,name='register'),
+    path('dashboard-admin/register/', views.register_view,name='register'),
     path('logout',views.logoutView,name='logout'),
+    path('base',views.baseView,name='base'),
     ##Dashboards
     path('dashboard-admin',views.dashboardView, name='admin_dashboard'),
     path('dashboard-super',views.supervisorView, name='supervisor_dashboard'),
@@ -30,6 +33,6 @@ urlpatterns = [
     path('detailTask',views.detailTask,name='detailTask'),
     ##Gestion de informes
     path('gestion-informes',views.gestionarInformes,name='gestion_informes'),
-    path('gestion-reportes',views.gestionReporte, name= 'gestion_reportes'),
+    path('gestion-reportes/',views.solicitud_view, name= 'gestion_reportes'),
 
 ]
