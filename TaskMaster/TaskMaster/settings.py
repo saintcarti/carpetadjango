@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Root'
+    'Root',
 ]
 
 MIDDLEWARE = [
@@ -124,7 +124,8 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-ROLES = (
-    ('admin','Administrador'),
-    ('cliente','Cliente'),
-)
+ROLES = [
+    ('admin', 'Administrador'),
+    ('vendedor', 'Vendedor'),
+    ('supervisor', 'Supervisor')
+]

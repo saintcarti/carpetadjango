@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import productos,tarea,usuario,UserProfile
+from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -58,15 +58,18 @@ def loginView(request):
 
 def registerView(request):
     data = {
-        'form':CustomUserCreationForm()
+        'form': CustomUserCreationForm()
     }
     if request.method == 'POST':
-        user_creation_form =CustomUserCreationForm(data= request.POST)
-        if user_creation_form.is_valid():
-            user_creation_form.save()
-            return redirect('login')
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Usuario registrado con éxito.")
+            return redirect('dashboard-admin')
+        else:
+            form = CustomUserCreationForm()
+        return render(request, "dashboard/GestionUs/register.html", data)
 
-    return render(request,"dashboard/GestionUs/register.html",data)
 
 
 def gestionarInformes(request):
@@ -79,7 +82,7 @@ def logoutView(request):
 
 def dashboardView(request):
 
-    tareas = tarea.objects.all()
+    tareas = Tarea.objects.all()
     context = {
         'tareas':tareas
     }
