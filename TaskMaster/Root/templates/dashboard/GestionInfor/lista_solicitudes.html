@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{%block content%}
+
+{% load static %}
+<div class="container-fluid">
+                   
+    <div class="container">
+    
+    
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Datos solicitud</th>
+                    <th>Convertir a pdf</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for soli in solicitudes %}
+                    <tr>
+                        <td>{{ soli }}</td>
+                        <td><a href="{% url 'generar_pdf'%}">Convertir a pdf</a></td>
+                        <td><a href="#">Eliminar</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </main>
+
+    <script>
+        function deleteAlert() {
+          const confirmation = confirm("¿Estás seguro de que deseas eliminar este usuario?");
+          if (confirmation) {
+            alert("Usuario eliminado correctamente."); 
+            // Aquí puedes agregar lógica adicional, como eliminar el registro vía backend.
+          }
+        }
+    </script>                      
+
+</div>
+<!-- /.container-fluid -->
+</div>
+
+{%endblock%}

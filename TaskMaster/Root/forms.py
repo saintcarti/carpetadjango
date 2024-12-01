@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User, Group
 from django.conf import settings
+from .models import Solicitud, DetalleSolicitud
+
 
 class CustomUserCreationForm(forms.ModelForm):
     # Campo para seleccionar el grupo de usuario (Administrador, Supervisor, Vendedor)
@@ -50,3 +52,15 @@ class CustomUserCreationForm(forms.ModelForm):
                 user.save()
 
         return user
+
+
+class SolicitudForm(forms.ModelForm):
+    class Meta:
+        model = Solicitud
+        fields = ['cliente', 'vendedor']  # Los productos se gestionan aparte
+
+
+class DetalleSolicitudForm(forms.ModelForm):
+    class Meta:
+        model = DetalleSolicitud
+        fields = ['producto', 'cantidad']

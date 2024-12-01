@@ -4,8 +4,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group,User
 from django.shortcuts import render
+from .forms import SolicitudForm, DetalleSolicitudForm
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from io import BytesIO
+from django.shortcuts import render
+from .models import Solicitud 
 
 
 
@@ -42,7 +49,6 @@ def loginView(request):
 
 
 @login_required
-@group_required('admin')
 def register_view(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
@@ -54,75 +60,240 @@ def register_view(request):
 
     return render(request, 'dashboard/GestionUs/register.html', {'form': form})
 
-
+@login_required
 def gestionarInformes(request):
-    return render(request, "dashboard/GestionInfor/gestion_informes.html")
+    if request.method == 'POST':
+        solicitud_form = SolicitudForm(request.POST)
+        detalle_form = DetalleSolicitudForm(request.POST)
+        if solicitud_form.is_valid() and detalle_form.is_valid():
+            solicitud = solicitud_form.save()  # Crea la solicitud
+            detalle = detalle_form.save(commit=False)
+            detalle.solicitud = solicitud  # Asocia la solicitud al detalle
+            detalle.save()  # Guarda el detalle
+            return redirect('lista_solicitudes')  # Redirige a una vista de lista
+    else:
+        solicitud_form = SolicitudForm()
+        detalle_form = DetalleSolicitudForm()
 
+    user_groups = request.user.groups.values_list('name', flat=True)
+    print(user_groups)
+    # Verificar si el usuario pertenece a los grupos específicos
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
+
+    # Para depuración, puedes imprimir estas variables o pasarlas al contexto
+    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
+
+    # Crear el contexto con las variables necesarias
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor,
+        'solicitud_form': solicitud_form,
+        'detalle_form': detalle_form
+    }
+
+
+
+    return render(request, "dashboard/GestionInfor/gestion_informes.html",context)
+
+def generar_pdf(request):
+    # Creamos un objeto en memoria para el PDF
+    buffer = BytesIO()
+
+    # Creamos un canvas ReportLab
+    p = canvas.Canvas(buffer, pagesize=letter)
+    width, height = letter
+
+    # Añadimos un título o contenido al PDF
+    p.drawString(100, height - 100, "Listado de Solicitudes")
+    
+    y_position = height - 150
+    solicitudes = Solicitud.objects.all()  # Obtener todas las solicitudes desde la base de datos
+    
+    for soli in solicitudes:
+        p.drawString(100, y_position, f"Solicitud: {soli}")  # Agregar datos de la solicitud al PDF
+        y_position -= 20
+    
+    # Finalizamos el PDF
+    p.showPage()
+    p.save()
+
+    # Volvemos al principio del buffer para que el archivo sea leído
+    buffer.seek(0)
+
+    # Devolvemos el PDF como respuesta HTTP
+    response = HttpResponse(buffer, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="solicitudes.pdf"'
+    return response
+
+@login_required
+def lista_solicitudes(request):
+    solicitudes = Solicitud.objects.all()
+    user_groups = request.user.groups.values_list('name', flat=True)
+    print(user_groups)
+    # Verificar si el usuario pertenece a los grupos específicos
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
+
+    # Para depuración, puedes imprimir estas variables o pasarlas al contexto
+    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
+
+    # Crear el contexto con las variables necesarias
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor,
+        'solicitudes': solicitudes
+    }
+    return render(request, 'dashboard/GestionInfor/lista_solicitudes.html', context)
 
 def logoutView(request):
     logout(request)
     return redirect('login')
 
-from django.contrib.auth.decorators import login_required
 
 @login_required
 def baseView(request):
-    # Verificar si el usuario pertenece a los grupos correspondientes
-    is_admin = request.user.groups.filter(name='Administrador').exists()
-    is_supervisor = request.user.groups.filter(name='Supervisor').exists()
-    is_vendedor = request.user.groups.filter(name='Vendedor').exists()
+    # Obtener los nombres de los grupos del usuario logueado
+    user_groups = request.user.groups.values_list('name', flat=True)
+    print(user_groups)
+    # Verificar si el usuario pertenece a los grupos específicos
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
 
     # Para depuración, puedes imprimir estas variables o pasarlas al contexto
     print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
 
-    return render(request, 'base.html', {
+    # Crear el contexto con las variables necesarias
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor
+    }
+
+    return render(request, 'base.html', context)
+
+
+
+@login_required
+def dashboardView(request):
+
+    user_groups = request.user.groups.values_list('name', flat=True)
+    print(user_groups)
+    # Verificar si el usuario pertenece a los grupos específicos
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
+
+    # Para depuración, puedes imprimir estas variables o pasarlas al contexto
+    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
+
+    # Crear el contexto con las variables necesarias
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor
+    }
+    return render(request, "dashboard/admin_dashboard.html",context)
+
+@login_required
+def solicitud_view(request):
+    clientes = Cliente.objects.all()
+    productos_lista = productos.objects.all()
+    vendedores = UserProfile.objects.filter(role='vendedor')
+    user_groups = request.user.groups.values_list('name', flat=True)
+    print(user_groups)
+    # Verificar si el usuario pertenece a los grupos específicos
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
+
+    # Para depuración, puedes imprimir estas variables o pasarlas al contexto
+    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
+
+    # Crear el contexto con las variables necesarias
+    context = {
         'is_admin': is_admin,
         'is_supervisor': is_supervisor,
         'is_vendedor': is_vendedor,
-    })
-
-
-
-def dashboardView(request):
-
-    tareas = Tarea.objects.all()
-    context = {
-        'tareas':tareas
-    }
-    
-    return render(request, "dashboard/admin_dashboard.html",context)
-
-def solicitud_view(request):
-    # Obtener los datos necesarios para los selects
-    clientes = Cliente.objects.all()
-    productos_lista = productos.objects.all()
-    vendedores = UserProfile.objects.all()
-
-    context = {
         'clientes': clientes,
         'productos_lista': productos_lista,
         'vendedores': vendedores,
-    }
+    }   
 
     return render(request, 'dashboard/GestionInfor/gestion_reporte.html', context)
 
-
+@login_required
 def supervisorView(request):
-    return render(request, "dashboard/supervisor_dashboard.html")
+    user_groups = request.user.groups.values_list('name', flat=True)
+    print(user_groups)
+    # Verificar si el usuario pertenece a los grupos específicos
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
 
+    # Para depuración, puedes imprimir estas variables o pasarlas al contexto
+    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
+
+    # Crear el contexto con las variables necesarias
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor
+    }
+    return render(request, "dashboard/supervisor_dashboard.html",context)
+
+@login_required
 def GestionUsuarioView(request):
-    return render(request, "dashboard/GestionUs/gestion_usuario.html")
+    usuarios = User.objects.all()  # Obtener todos los usuarios
+    user_groups = request.user.groups.values_list('name', flat=True)  # Obtener los grupos del usuario
+    print("User groups:", list(user_groups))  # Verificar qué grupos tiene el usuario
+    
+    # Verificar si el usuario pertenece a los grupos específicos
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
 
-def blankView(request):
-    return render(request, "dashboard/blank.html")
+    # Para depuración, puedes imprimir estas variables
+    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
 
+    # Crear el contexto con las variables necesarias
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor,
+        'usuario': usuarios
+    }
+
+    return render(request, "dashboard/GestionUs/gestion_usuario.html", context)
+
+
+
+@login_required
 def vendedorView(request):
-    return render(request, "dashboard/vendedor_dashboard.html")
+    user_groups = request.user.groups.values_list('name', flat=True)
+    print(user_groups)
+    # Verificar si el usuario pertenece a los grupos específicos
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
+
+    # Para depuración, puedes imprimir estas variables o pasarlas al contexto
+    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
+
+    # Crear el contexto con las variables necesarias
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor
+    }
+    return render(request, "dashboard/vendedor_dashboard.html",context)
 
 ##gestion de usuarios
-
-def gestionUs(request):
-    return render(request, "dashboard/GestionUs/gestion_usuario.html")
 
 def detailView(request):
     return render(request, "dashboard/GestionUs/crud/detail.html")
@@ -134,9 +305,25 @@ def createUser(request):
     return render(request, "dashboard/GestionUs/crud/create_user.html")
 
 ##gestion de productos
-
+@login_required
 def gestionProd(request):
-    return render(request, "dashboard/GestionProd/gestion_productos.html")
+    user_groups = request.user.groups.values_list('name', flat=True)
+    print(user_groups)
+    # Verificar si el usuario pertenece a los grupos específicos
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
+
+    # Para depuración, puedes imprimir estas variables o pasarlas al contexto
+    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
+
+    # Crear el contexto con las variables necesarias
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor
+    }
+    return render(request, "dashboard/GestionProd/gestion_productos.html",context)
 
 def createProd(request):
     return render(request, "dashboard/GestionProd/crud/create_product.html")
@@ -147,15 +334,47 @@ def modifyProd(request):
 def detailProd(request):
     return render(request, "dashboard/GestionProd/crud/detail.html")
 
-def gestionCategoria(request):
-    return render(request, "dashboard/GestionProd/gestionar_categorias.html")
+
+
 
 def gestionReporte(request):
-    return render(request, "dashboard/GestionInfor/gestion_reporte.html")
+    user_groups = request.user.groups.values_list('name', flat=True)
+    print(user_groups)
+    # Verificar si el usuario pertenece a los grupos específicos
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
+
+    # Para depuración, puedes imprimir estas variables o pasarlas al contexto
+    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
+
+    # Crear el contexto con las variables necesarias
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor
+    }   
+    return render(request, "dashboard/GestionInfor/gestion_reporte.html",context)
 
 ##gestion de tareas
 def gestionTask(request):
-    return render(request, "dashboard/GestionTareas/gestion_task.html")
+    user_groups = request.user.groups.values_list('name', flat=True)
+    print(user_groups)
+    # Verificar si el usuario pertenece a los grupos específicos
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
+
+    # Para depuración, puedes imprimir estas variables o pasarlas al contexto
+    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
+
+    # Crear el contexto con las variables necesarias
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor
+    }
+    return render(request, "dashboard/GestionTareas/gestion_task.html",context)
 
 def createTask(request):
     return render(request, "dashboard/GestionTareas/crud/create_task.html")

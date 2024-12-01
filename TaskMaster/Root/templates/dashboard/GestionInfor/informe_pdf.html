@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe de Solicitud</title>
+    <style>
+        /* Agrega algunos estilos básicos para el PDF */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table, .table th, .table td {
+            border: 1px solid #ddd;
+        }
+        .table th, .table td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Informe de Solicitud #{{ solicitud.idSolicitud }}</h1>
+    <p><strong>Cliente:</strong> {{ solicitud.cliente.nombre }}</p>
+    <p><strong>Vendedor:</strong> {{ solicitud.vendedor.user.username }}</p>
+    <p><strong>Fecha Solicitud:</strong> {{ solicitud.fechaSolicitud }}</p>
+
+    <h2>Detalles de la Solicitud</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detalle in detalles %}
+                <tr>
+                    <td>{{ detalle.producto.nombreProducto }}</td>
+                    <td>{{ detalle.cantidad }}</td>
+                    <td>{{ detalle.subtotal }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p><strong>Total: </strong>${{ solicitud.calcular_total }}</p>
+
+</body>
+</html>

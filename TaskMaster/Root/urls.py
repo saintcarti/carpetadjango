@@ -10,11 +10,10 @@ urlpatterns = [
     path('logout',views.logoutView,name='logout'),
     path('base',views.baseView,name='base'),
     ##Dashboards
-    path('dashboard-admin',views.dashboardView, name='admin_dashboard'),
-    path('dashboard-super',views.supervisorView, name='supervisor_dashboard'),
-    path('dashboard-vend',views.vendedorView, name='vendedor_dashboard'),
+    path('dashboard',views.dashboardView, name='admin_dashboard'),
+    path('dashboard',views.supervisorView, name='supervisor_dashboard'),
+    path('dashboard',views.vendedorView, name='vendedor_dashboard'),
     path('index',views.indexView, name='index'),
-    path('dashboard-admin/blank',views.blankView, name='blank'),
     path('dashboard-admin/Gestion_usuario',views.GestionUsuarioView, name='gestion_usuario'),
     ##Gestion de usuarios
     path('modifyUser',views.modifyUser,name='modifyuser'),
@@ -25,7 +24,6 @@ urlpatterns = [
     path('detailProd',views.detailProd,name='detailProd'),
     path('modifyProd',views.modifyProd,name='modifyProd'),
     path('createProd',views.createProd,name='createProd'),
-    path('gestion-categorias',views.gestionCategoria,name='gestion_categorias'),
     ##Gestion de tareas
     path('gestion-tareas',views.gestionTask,name='gestion_task'),
     path('createTask',views.createTask,name='createTask'),
@@ -34,5 +32,7 @@ urlpatterns = [
     ##Gestion de informes
     path('gestion-informes',views.gestionarInformes,name='gestion_informes'),
     path('gestion-reportes/',views.solicitud_view, name= 'gestion_reportes'),
+    path('lista-reportes/',views.lista_solicitudes, name= 'lista_solicitudes'),
+    path('generarpdf/',views.generar_pdf, name='generar_pdf'),
 
 ]
