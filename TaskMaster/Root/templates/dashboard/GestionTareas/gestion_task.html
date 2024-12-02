@@ -1,5 +1,40 @@
-{% extends 'base.html'%}
-{%load static%}
-{%block content%}
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 
-{%endblock%}
+<div class="container-fluid">
+    <h2>Gestión de Tareas</h2>
+
+    <div class="row">
+        {% for tarea in tasks %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ tarea.nombreTarea }}</h5>
+                        <p class="card-text">{{ tarea.descripcion }}</p>
+                        <p><strong>Nombre encargado: </strong>{{tarea.usuario.user}}</p>
+                        <p><strong>Fecha inicio:</strong> {{ tarea.fechaInicio }}</p>
+                        <p><strong>Horas dedicadas:</strong> {{ tarea.horasDedicadas }}</p>
+                        <p><strong>Terminado:</strong> {% if tarea.terminado %}  Sí {% else %} No {% endif %}</p>
+                        <div class="container">
+                            <a href="{%url 'deleteTask' tarea.idTarea%}" class="btn btn-danger">Borrar tarea</a>
+                            <a href="{%url 'modifyTask' tarea.idTarea%}" style="margin-left: 100px;" class="btn btn-warning">Editar tarea</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No hay tareas disponibles.</p>
+        {% endfor %}
+    </div>
+
+    {% if is_admin %}
+        <p>Estás viendo todas las tareas como administrador.</p>
+    {% elif is_supervisor %}
+        <p>Estás viendo las tareas asignadas a los vendedores.</p>
+    {% elif is_vendedor %}
+        <p>Estás viendo tus propias tareas como vendedor.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

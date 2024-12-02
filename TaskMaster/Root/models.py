@@ -9,8 +9,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
     role = models.CharField(max_length=20,choices=settings.ROLES)
 
-def __str__(self):
-    return self.user.username + ' - '+self.role
+    def __str__(self):
+        return self.user.username 
 class Tarea(models.Model):
     idTarea = models.AutoField(primary_key=True, verbose_name='Id tarea')
     nombreTarea = models.CharField(max_length=100, verbose_name='Nombre tarea')
@@ -19,7 +19,7 @@ class Tarea(models.Model):
     fechaTermino = models.DateTimeField(verbose_name='Fecha término', null=True, blank=True)
     horasDedicadas = models.PositiveIntegerField(verbose_name='Horas dedicadas', default=0)
     usuario = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    notificado = models.BooleanField(default=False, verbose_name='Notificado')
+    terminado = models.BooleanField(default=False, verbose_name='Terminado')
 
     
 
@@ -39,8 +39,10 @@ class productos(models.Model):
     precio = models.DecimalField(max_digits=5,decimal_places=2,verbose_name='Precio producto')
     imagen = models.ImageField(upload_to='imagenes',null=True,verbose_name='Imagen producto')
     stock = models.PositiveIntegerField(verbose_name='Stock producto',default=0)
-    categoria = models.CharField(max_length=100, null=True, blank=True, verbose_name='Categoría')
     descuento = models.DecimalField(max_digits=5, decimal_places=2, default=0, verbose_name='Descuento (%)')
+
+    def __str__(self):
+        return self.nombreProducto
 
 class Cliente(models.Model):
     idCliente = models.AutoField(primary_key=True, verbose_name='Id cliente')
@@ -48,9 +50,7 @@ class Cliente(models.Model):
     correo = models.EmailField(max_length=100, verbose_name='Correo del cliente')
     telefono = models.CharField(max_length=15, verbose_name='Teléfono del cliente', null=True, blank=True)
     direccion = models.TextField(verbose_name='Dirección del cliente', null=True, blank=True)
-    class Meta:
-        db_table = 'Root_cliente' 
-
+    
     def __str__(self):
         return self.nombre
     
@@ -74,6 +74,11 @@ class Solicitud(models.Model):
     def __str__(self):
         return f"Solicitud {self.idSolicitud} - {self.cliente.nombre} - {self.fechaSolicitud} - ${self.calcular_total()}"
 
+    def get_nombre_cliente(self):
+        return self.cliente.nombre
+    
+    def get_nombre_vendedor(self):
+        return self.vendedor.user.username
 
 
 class DetalleSolicitud(models.Model):

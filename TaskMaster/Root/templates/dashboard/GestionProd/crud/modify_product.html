@@ -1,4 +1,8 @@
+{%extends 'base.html'%}
 {% load static %}
+{% load crispy_forms_tags %}
+
+{%block content%}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,19 +13,16 @@
 </head>
 <body>
     <div class="container">
+        
         <h1>Modificar Producto</h1>
-        <form action="#" method="post" enctype="multipart/form-data">
-            <label for="imagen">Imagen del Producto:</label>
-            <input type="file" id="imagen" name="imagen" accept="image/*">
-
-            <label for="nombre">Nombre del Producto:</label>
-            <input type="text" id="nombre" name="nombre" value="Producto Ejemplo" required>
-
-            <label for="descripcion">Descripción del Producto:</label>
-            <textarea id="descripcion" name="descripcion" rows="4" required>Descripción del producto de ejemplo.</textarea>
-
-            <button type="submit">Guardar Cambios</button>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+            <a class="btn btn-danger" style="margin-left: 10px;" href="{%url 'gestion_productos'%}">Volver atras</a>
+            
         </form>
     </div>
 </body>
 </html>
+{%endblock%}

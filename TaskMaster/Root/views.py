@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -6,13 +6,13 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm
 from django.contrib.auth.models import Group,User
 from django.shortcuts import render
-from .forms import SolicitudForm, DetalleSolicitudForm
+from .forms import SolicitudForm, DetalleSolicitudForm,ProductoForm,TareaForm
 from django.http import HttpResponse
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from io import BytesIO
 from django.shortcuts import render
-from .models import Solicitud 
+from .models import Solicitud ,productos,Tarea
 
 
 
@@ -98,34 +98,47 @@ def gestionarInformes(request):
 
     return render(request, "dashboard/GestionInfor/gestion_informes.html",context)
 
-def generar_pdf(request):
-    # Creamos un objeto en memoria para el PDF
-    buffer = BytesIO()
+def generar_pdf(request, solicitud_id):
+    # Buscar la solicitud correspondiente al ID
+    try:
+        solicitud = Solicitud.objects.get(idSolicitud=solicitud_id)
+    except Solicitud.DoesNotExist:
+        return HttpResponse("Solicitud no encontrada.", status=404)
 
-    # Creamos un canvas ReportLab
+    # Crear un buffer para generar el PDF
+    buffer = BytesIO()
     p = canvas.Canvas(buffer, pagesize=letter)
     width, height = letter
 
-    # Añadimos un título o contenido al PDF
-    p.drawString(100, height - 100, "Listado de Solicitudes")
-    
+    # Información de la solicitud
+    p.drawString(100, height - 50, f"Informe de Solicitud #{solicitud.idSolicitud}")
+    p.drawString(100, height - 70, f"Cliente: {solicitud.cliente.nombre}")
+    p.drawString(100, height - 90, f"Vendedor: {solicitud.vendedor.user.username if solicitud.vendedor else 'N/A'}")
+    p.drawString(100, height - 110, f"Fecha Solicitud: {solicitud.fechaSolicitud}")
+
+    # Tabla de detalles de la solicitud
     y_position = height - 150
-    solicitudes = Solicitud.objects.all()  # Obtener todas las solicitudes desde la base de datos
-    
-    for soli in solicitudes:
-        p.drawString(100, y_position, f"Solicitud: {soli}")  # Agregar datos de la solicitud al PDF
+    p.drawString(100, y_position, "Detalles de la Solicitud:")
+    y_position -= 20
+
+    for detalle in solicitud.detallesolicitud_set.all():
+        p.drawString(100, y_position, f"Producto: {detalle.producto.nombreProducto}")
+        p.drawString(300, y_position, f"Cantidad: {detalle.cantidad}")
+        p.drawString(450, y_position, f"Subtotal: ${detalle.subtotal():.2f}")
         y_position -= 20
-    
-    # Finalizamos el PDF
+
+    # Total
+    y_position -= 20
+    p.drawString(100, y_position, f"Total: ${solicitud.calcular_total():.2f}")
+
+    # Finalizar el PDF
     p.showPage()
     p.save()
 
-    # Volvemos al principio del buffer para que el archivo sea leído
+    # Devolver el PDF como respuesta
     buffer.seek(0)
-
-    # Devolvemos el PDF como respuesta HTTP
     response = HttpResponse(buffer, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="solicitudes.pdf"'
+    response['Content-Disposition'] = f'attachment; filename="solicitud_{solicitud.idSolicitud}.pdf"'
     return response
 
 @login_required
@@ -137,6 +150,14 @@ def lista_solicitudes(request):
     is_admin = 'admin' in user_groups
     is_supervisor = 'supervisor' in user_groups
     is_vendedor = 'vendedor' in user_groups
+
+    if is_admin:
+        solicitudes = solicitudes
+    elif is_supervisor:
+    # Filtrar solicitudes asignadas a los vendedores supervisados
+        solicitudes = solicitudes.filter(vendedor__role='vendedor')
+    elif is_vendedor:
+        solicitudes = solicitudes.filter(vendedor=request.user.userprofile)
 
     # Para depuración, puedes imprimir estas variables o pasarlas al contexto
     print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
@@ -200,32 +221,19 @@ def dashboardView(request):
     }
     return render(request, "dashboard/admin_dashboard.html",context)
 
+
+
 @login_required
-def solicitud_view(request):
-    clientes = Cliente.objects.all()
-    productos_lista = productos.objects.all()
-    vendedores = UserProfile.objects.filter(role='vendedor')
-    user_groups = request.user.groups.values_list('name', flat=True)
-    print(user_groups)
-    # Verificar si el usuario pertenece a los grupos específicos
-    is_admin = 'admin' in user_groups
-    is_supervisor = 'supervisor' in user_groups
-    is_vendedor = 'vendedor' in user_groups
+def delete_solicitud(request, solicitud_id):
+    try:
+        solicitud = Solicitud.objects.get(idSolicitud=solicitud_id)
+        solicitud.delete()
+        messages.success(request, 'Solicitud eliminada correctamente.')
+        return redirect('lista_solicitudes')
+    except Solicitud.DoesNotExist:
+        messages.error(request, 'La solicitud no existe.')
+        return redirect('lista_solicitudes')
 
-    # Para depuración, puedes imprimir estas variables o pasarlas al contexto
-    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
-
-    # Crear el contexto con las variables necesarias
-    context = {
-        'is_admin': is_admin,
-        'is_supervisor': is_supervisor,
-        'is_vendedor': is_vendedor,
-        'clientes': clientes,
-        'productos_lista': productos_lista,
-        'vendedores': vendedores,
-    }   
-
-    return render(request, 'dashboard/GestionInfor/gestion_reporte.html', context)
 
 @login_required
 def supervisorView(request):
@@ -271,6 +279,12 @@ def GestionUsuarioView(request):
 
     return render(request, "dashboard/GestionUs/gestion_usuario.html", context)
 
+@login_required
+def eliminar_usuario(request,id):
+    usuario = User.objects.get(id=id)
+    usuario.delete()
+    return redirect('gestion_usuario')
+
 
 
 @login_required
@@ -301,12 +315,11 @@ def detailView(request):
 def modifyUser(request):
     return render(request, "dashboard/GestionUs/crud/modify_user.html")
 
-def createUser(request):
-    return render(request, "dashboard/GestionUs/crud/create_user.html")
 
 ##gestion de productos
 @login_required
 def gestionProd(request):
+    producto = productos.objects.all()
     user_groups = request.user.groups.values_list('name', flat=True)
     print(user_groups)
     # Verificar si el usuario pertenece a los grupos específicos
@@ -321,18 +334,84 @@ def gestionProd(request):
     context = {
         'is_admin': is_admin,
         'is_supervisor': is_supervisor,
-        'is_vendedor': is_vendedor
+        'is_vendedor': is_vendedor,
+        'producto': producto
     }
     return render(request, "dashboard/GestionProd/gestion_productos.html",context)
 
-def createProd(request):
-    return render(request, "dashboard/GestionProd/crud/create_product.html")
 
-def modifyProd(request):
-    return render(request, "dashboard/GestionProd/crud/modify_product.html")
+@login_required
+def createProd(request):
+    user_groups = request.user.groups.values_list('name', flat=True)
+    print(user_groups)
+    # Verificar si el usuario pertenece a los grupos específicos
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
+
+    # Para depuración, puedes imprimir estas variables o pasarlas al contexto
+    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
+
+    # Crear el contexto con las variables necesarias
+    
+
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('gestion_productos')  # Cambia esto al nombre de la URL que prefieras
+    else:
+        form = ProductoForm()
+
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor,
+        'form': form
+    }
+    return render(request, "dashboard/GestionProd/crud/create_product.html" ,context)
+
+
+@login_required
+def modifyProd(request, id):
+    product = get_object_or_404(productos, idProducto=id)
+
+    if request.method == "POST":
+        form = ProductoForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Producto actualizado con éxito.")
+            return redirect('gestion_productos')  # Redirigir a la página de gestión de productos
+        else:
+            messages.error(request, "Hubo un error al actualizar el producto.")
+    else:
+        form = ProductoForm(instance=product)
+
+    user_groups = request.user.groups.values_list('name', flat=True)
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
+
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor,
+        'form': form,
+    }
+
+    return render(request, "dashboard/GestionProd/crud/modify_product.html", context)
+
+
 
 def detailProd(request):
+    
+
     return render(request, "dashboard/GestionProd/crud/detail.html")
+
+def deleteProd(request, id):
+    product = get_object_or_404(productos, idProducto = id)
+    product.delete()
+    return redirect('gestion_productos')
 
 
 
@@ -357,30 +436,104 @@ def gestionReporte(request):
     return render(request, "dashboard/GestionInfor/gestion_reporte.html",context)
 
 ##gestion de tareas
+@login_required
 def gestionTask(request):
+    """
+    Vista única para gestionar las tareas según el rol del usuario:
+    - Admin: ve todas las tareas.
+    - Supervisor: ve las tareas asignadas a los vendedores.
+    - Vendedor: ve solo sus propias tareas.
+    """
     user_groups = request.user.groups.values_list('name', flat=True)
-    print(user_groups)
+
     # Verificar si el usuario pertenece a los grupos específicos
     is_admin = 'admin' in user_groups
     is_supervisor = 'supervisor' in user_groups
     is_vendedor = 'vendedor' in user_groups
 
-    # Para depuración, puedes imprimir estas variables o pasarlas al contexto
-    print(f"Is Admin: {is_admin}, Is Supervisor: {is_supervisor}, Is Vendedor: {is_vendedor}")
+    # Filtrar las tareas según el rol del usuario
+    if is_admin:
+        tasks = Tarea.objects.all()  # Los admins ven todas las tareas
+    elif is_supervisor:
+        tasks = Tarea.objects.filter(usuario__role='vendedor')  # Supervisores ven tareas de vendedores
+    elif is_vendedor:
+        tasks = Tarea.objects.filter(usuario=request.user.userprofile)  # Vendedores ven sus propias tareas
+    else:
+        tasks = Tarea.objects.none()  # En caso de que el usuario no pertenezca a ningún rol definido
 
     # Crear el contexto con las variables necesarias
     context = {
+        'tasks': tasks,
         'is_admin': is_admin,
         'is_supervisor': is_supervisor,
-        'is_vendedor': is_vendedor
+        'is_vendedor': is_vendedor,
     }
-    return render(request, "dashboard/GestionTareas/gestion_task.html",context)
+
+    return render(request, "dashboard/GestionTareas/gestion_task.html", context)
 
 def createTask(request):
-    return render(request, "dashboard/GestionTareas/crud/create_task.html")
 
-def modifyTask(request):
-    return render(request, "dashboard/GestionTareas/crud/modify_task.html")
+    if request.method == 'POST':
+        form = TareaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('gestion_task')  # Cambia 'gestion_tareas' al nombre de tu URL para listar tareas
+    else:
+        form = TareaForm()
+
+    user_groups = request.user.groups.values_list('name', flat=True)
+
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
+
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor,
+        'form': form
+    }
+
+
+    return render(request, "dashboard/GestionTareas/crud/create_task.html",context)
+
+def modifyTask(request, id):
+    task = get_object_or_404(Tarea, idTarea=id)
+
+    if request.method == "POST":
+        form = TareaForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Tarea actualizada con éxito.")
+            return redirect('gestion_task')
+        else:
+            messages.error(request, "Hubo un error al actualizar la tarea.")
+    else:
+        form = TareaForm(instance=task)
+
+
+
+    user_groups = request.user.groups.values_list('name', flat=True)
+
+    # Verificar si el usuario pertenece a los grupos específicos
+    is_admin = 'admin' in user_groups
+    is_supervisor = 'supervisor' in user_groups
+    is_vendedor = 'vendedor' in user_groups
+
+    context = {
+        'is_admin': is_admin,
+        'is_supervisor': is_supervisor,
+        'is_vendedor': is_vendedor,
+        'form': form,
+    }
+
+    return render(request, "dashboard/GestionTareas/crud/modify_task.html",context)
+
+def deleteTask(request, id):
+    task = get_object_or_404(Tarea, idTarea=id)
+    task.delete()
+    return redirect('gestion_task')
+
 
 def detailTask(request):
     return render(request, "dashboard/GestionTareas/crud/detail.html")

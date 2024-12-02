@@ -10,21 +10,39 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Datos solicitud</th>
-                    <th>Convertir a pdf</th>
-                    <th>Eliminar</th>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Productos</th>
+                    <th>Total</th>
+                    <th>Vendedor</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {% for soli in solicitudes %}
                     <tr>
-                        <td>{{ soli }}</td>
-                        <td><a href="{% url 'generar_pdf'%}">Convertir a pdf</a></td>
-                        <td><a href="#">Eliminar</a></td>
+                        <td>{{ soli.idSolicitud }}</td>
+                        <td>{{ soli.cliente.nombre }}</td>
+                        <td>{{ soli.fechaSolicitud|date:"Y-m-d H:i" }}</td>
+                        <td>
+                            <ul>
+                                {% for detalle in soli.detallesolicitud_set.all %}
+                                    <li>{{ detalle.producto.nombreProducto }} (x{{ detalle.cantidad }})</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>${{ soli.calcular_total }}</td>
+                        <td>{{ soli.vendedor.user.username }}</td>
+                        <td>
+                            <a href="{% url 'generar_pdf' soli.idSolicitud %}">PDF</a> |
+                            <a href="{% url 'borrar_solicitud' soli.idSolicitud %}">Eliminar</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+        
         
     </main>
 

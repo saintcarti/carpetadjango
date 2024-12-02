@@ -1,23 +1,32 @@
 {% extends 'base.html' %}
-{%load static%}
+{% load static %}
 
-{%block content%}
-
+{% block content %}
   <div class="form-container">
     <div class="form-header">
-      <h2>Solicitudes</h2>
-      
+      <h2>Formulario de Solicitud</h2>
     </div>
     <form method="post">
-        {% csrf_token %}
-        <h3>Solicitud</h3>
-        {{ solicitud_form.as_p }}
-    
-        <h3>Productos</h3>
-        {{ detalle_form.as_p }}
-    
-        <button type="submit">Guardar</button>
+      {% csrf_token %}
+      <h3>Solicitud</h3>
+      
+      <div class="form-group">
+        <label for="cliente">Cliente:</label>
+        {{ solicitud_form.cliente }}
+      </div>
+
+      <div class="form-group">
+        <label for="vendedor">Vendedor:</label>
+        {{ solicitud_form.vendedor }}
+      </div>
+
+      <h3>Productos</h3>
+      <div class="form-group">
+        <label for="productos">Producto:</label>
+        {{ solicitud_form.productos }}
+      </div>
+
+      <button type="submit">Guardar</button>
     </form>
   </div>
-
-{%endblock%}
+{% endblock %}

@@ -16,23 +16,25 @@ urlpatterns = [
     path('index',views.indexView, name='index'),
     path('dashboard-admin/Gestion_usuario',views.GestionUsuarioView, name='gestion_usuario'),
     ##Gestion de usuarios
+    path('borrar-usuario/<int:id>' , views.eliminar_usuario, name='borrar_usuario'),
     path('modifyUser',views.modifyUser,name='modifyuser'),
-    path('createUser',views.createUser,name='createUser'),
     path('detailUser',views.detailView, name='detailUser'),
     ##Gestion de productos
     path('gestion-productos',views.gestionProd,name='gestion_productos'),
     path('detailProd',views.detailProd,name='detailProd'),
-    path('modifyProd',views.modifyProd,name='modifyProd'),
+    path('modifyProd/<int:id>',views.modifyProd,name='modifyProd'),
     path('createProd',views.createProd,name='createProd'),
+    path('deleteProd/<int:id>',views.deleteProd,name='deleteProd'),
     ##Gestion de tareas
     path('gestion-tareas',views.gestionTask,name='gestion_task'),
     path('createTask',views.createTask,name='createTask'),
-    path('modifyTask',views.modifyTask,name='modifyTask'),
+    path('modifyTask/<int:id>',views.modifyTask,name='modifyTask'),
+    path('deleteTask/<int:id>',views.deleteTask,name='deleteTask'),
     path('detailTask',views.detailTask,name='detailTask'),
     ##Gestion de informes
     path('gestion-informes',views.gestionarInformes,name='gestion_informes'),
-    path('gestion-reportes/',views.solicitud_view, name= 'gestion_reportes'),
-    path('lista-reportes/',views.lista_solicitudes, name= 'lista_solicitudes'),
-    path('generarpdf/',views.generar_pdf, name='generar_pdf'),
+    path('lista-solicitudes/',views.lista_solicitudes, name= 'lista_solicitudes'),
+    path('generarpdf/<int:solicitud_id>',views.generar_pdf, name='generar_pdf'), 
+    path('borrar-solicitud/<int:solicitud_id>',views.delete_solicitud, name='borrar_solicitud'),
 
 ]

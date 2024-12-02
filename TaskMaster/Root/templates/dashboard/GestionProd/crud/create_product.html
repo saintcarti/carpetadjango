@@ -1,27 +1,14 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Producto</title>
-    <link rel="stylesheet" href="{% static 'css/Sproduct.css' %}">
-</head>
-<body>
-    <div class="container">
-        <h1>Crear Producto</h1>
-        <form action="#" method="post" enctype="multipart/form-data">
-            <label for="imagen">Imagen del Producto:</label>
-            <input type="file" id="imagen" name="imagen" accept="image/*" required>
+{% load crispy_forms_tags %}
 
-            <label for="nombre">Nombre del Producto:</label>
-            <input type="text" id="nombre" name="nombre" required>
-
-            <label for="descripcion">Descripción del Producto:</label>
-            <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
-
-            <button type="submit">Crear Producto</button>
-        </form>
-    </div>
-</body>
-</html>
+{% block content %}
+<div class="container">
+    <h1>Crear Producto</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Crear Producto</button>
+    </form>
+</div>
+{% endblock %}

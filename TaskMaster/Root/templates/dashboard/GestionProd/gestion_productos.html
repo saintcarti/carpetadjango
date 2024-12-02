@@ -1,9 +1,36 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block content%}
-
-                <div class="container-fluid">
-                   
-                    
-                </div>
+<div style="text-align: center;">
+    <h1>Gestión de Productos</h1>
+</div>
+<div class="container-fluid" style="margin-top: 30px;">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Imagen</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for products in producto%}
+            <tr>
+                <td>{{products.idProducto}}</td>
+                <td>{{products.nombreProducto}}</td>
+                <td>{{products.precio}}</td>
+                <td>{{products.stock}}</td>
+                <td style="text-align: center;"><img src="{{products.imagen.url}}" style="max-width: 100px;" ></td>
+                <td>
+                    <a href="{%url 'modifyProd' products.idProducto%}" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'deleteProd' products.idProducto%}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>                    
+</div>
 {%endblock%}

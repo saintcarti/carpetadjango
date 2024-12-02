@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User, Group
 from django.conf import settings
-from .models import Solicitud, DetalleSolicitud
+from .models import Solicitud, DetalleSolicitud,productos,Cliente,UserProfile,Tarea
 
 
 class CustomUserCreationForm(forms.ModelForm):
@@ -57,10 +57,53 @@ class CustomUserCreationForm(forms.ModelForm):
 class SolicitudForm(forms.ModelForm):
     class Meta:
         model = Solicitud
-        fields = ['cliente', 'vendedor']  # Los productos se gestionan aparte
+        fields = ['cliente', 'vendedor', 'productos']  # Los campos que quieres que el formulario maneje
+
+    # Cliente (campo de selección único)
+    cliente = forms.ModelChoiceField(
+        queryset=Cliente.objects.all(), 
+        empty_label="Seleccione un cliente", 
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    
+    # Vendedor (campo de selección único)
+    vendedor = forms.ModelChoiceField(
+        queryset=UserProfile.objects.filter(role='vendedor'), 
+        empty_label="Seleccione un vendedor", 
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    
+    # Productos (campo de selección único)
+    productos = forms.ModelChoiceField(
+        queryset=productos.objects.all(), 
+        empty_label="Seleccione un producto", 
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
 
 class DetalleSolicitudForm(forms.ModelForm):
     class Meta:
         model = DetalleSolicitud
         fields = ['producto', 'cantidad']
+
+class ProductoForm(forms.ModelForm):
+    class Meta:
+        model = productos
+        fields = ['imagen', 'nombreProducto', 'precio', 'stock', 'descuento']
+        widgets = {
+            'descripcion': forms.Textarea(attrs={'rows': 4}),
+        }
+
+
+class TareaForm(forms.ModelForm):
+    class Meta:
+        model = Tarea
+        fields = ['nombreTarea', 'descripcion', 'fechaTermino', 'horasDedicadas', 'usuario', 'terminado']
+        widgets = {
+            'nombreTarea': forms.TextInput(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'fechaTermino': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'horasDedicadas': forms.NumberInput(attrs={'class': 'form-control'}),
+            'usuario': forms.Select(attrs={'class': 'form-control'}),  # Para seleccionar el usuario asignado
+            'terminado': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }

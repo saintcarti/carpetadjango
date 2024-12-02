@@ -14,7 +14,6 @@
                                     <th>ID</th>
                                     <th>Nombre usuario</th>
                                     <th>Email</th>
-                                    <th>Editar</th>
                                     <th>Eliminar</th>
                                 </tr>
                             </thead>
@@ -24,8 +23,7 @@
                                         <td>{{ user.id }}</td>
                                         <td>{{ user.username }}</td>
                                         <td>{{ user.email }}</td>
-                                        <td><a href="#">Editar</a></td>
-                                        <td><a href="#">Eliminar</a></td>
+                                        <td><a href="{%url 'borrar_usuario' user.id%}">Eliminar</a></td>
                                     </tr>
                                 {% endfor %}
                             </tbody>

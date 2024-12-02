@@ -110,6 +110,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Acciones:</h6>
             <a class="collapse-item" href="{% url 'gestion_productos' %}">Gestionar productos</a>
+            <a class="collapse-item" href="{% url 'createProd' %}">Crear productos</a>
         </div>
     </div>
 </li>
@@ -127,10 +128,14 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Acciones:</h6>
             <a class="collapse-item" href="{% url 'gestion_task' %}">Gestionar tareas</a>
+            {% if is_admin or is_supervisor %}
+            <a class="collapse-item" href="{% url 'createTask' %}">Crear tareas</a>
+            {% endif %}
         </div>
     </div>
 </li>
 {% endif %}
+
 <!-- Divider -->
 <hr class="sidebar-divider">
 
